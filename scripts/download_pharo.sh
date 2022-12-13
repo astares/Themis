@@ -34,6 +34,8 @@ repo
     name: 'Themis';
     location: '$1' asFileReference.
 
-repo register
+repo register.
+
+IceTipRepositoriesBrowser new open
 
 "
