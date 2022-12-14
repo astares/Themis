@@ -40,17 +40,19 @@ LABEL maintainer="astares@gmx.de"
 #************************************************************
 # Update to latest version and install some tooling
 #************************************************************
-RUN \
-    set -eu; \
-    apt-get update && \
- #   apt-get -y upgrade && \
-    apt-get install -y curl git wget unzip
- 
+WORKDIR /tmp/pharo
+
+COPY scripts/* scripts/
+COPY src/* src/
+
+RUN scripts/setup_machine.sh 
+RUN scripts/download_pharo.sh /tmp/pharo
+
 #************************************************************
 # Install Pharo
 #************************************************************
-WORKDIR /tmp/pharo
-RUN wget -O- https://get.pharo.org/64/100+vm | bash
+#WORKDIR /tmp/pharo
+#RUN wget -O- https://get.pharo.org/64/100+vm | bash
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 #COPY entrypoint.sh /entrypoint.sh
