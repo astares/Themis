@@ -17,6 +17,10 @@ fi
 # Build directory
 BUILD_PATH="$1/build"
 
+echo "*************************************************************"
+echo "* Installing Pharo into $BUILD_PATH"
+echo "*************************************************************"
+
 # If there is an old build directory then remove it
 if [ -d build ]; then 
     echo "Removing old build directory $BUILD_PATH"
