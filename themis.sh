@@ -30,12 +30,45 @@
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #
 #############################################################
-# (c) 2022, Dipl.-Inf. T. Bergmann - astares.com
+# (c) 2023, Dipl.-Inf. T. Bergmann - astares.com
 #############################################################
 
 # Find script context where we run 
 SCRIPT=$(realpath -s "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
+
+#************************************************************
+# Utilities
+#************************************************************
+usage() { echo "Usage: $0 [-p <string>] " 1>&2; exit 1; }
+
+#************************************************************
+# Processing arguments
+#************************************************************
+while getopts ":p:h" o; do
+    case "${o}" in
+        p)
+            p=${OPTARG}
+            ;;
+        h)
+            usage
+            ;;
+    esac
+done
+# Shift arguments to the left by the number of arguments 
+# processed by getopts which allows to remove options and arguments 
+# that have been processed from the list of arguments, so that we 
+# can focus on the remaining arguments.
+shift $((OPTIND-1))
+
+#************************************************************
+# Check for required parameters
+#************************************************************
+if [ -z "${p}" ]; then
+    echo "Parameter p was not specified\n";
+    usage;
+    exit;
+fi
 
 # Download Pharo into a /build directory
 "$SCRIPTPATH/scripts/download_pharo.sh" $SCRIPTPATH  
