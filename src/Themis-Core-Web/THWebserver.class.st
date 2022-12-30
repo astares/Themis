@@ -4,7 +4,7 @@ Themis webserver
 Class {
 	#name : #THWebserver,
 	#superclass : #Object,
-	#category : #'Themis-Core-Web'
+	#category : #'Themis-Core-Web-Base'
 }
 
 { #category : #running }

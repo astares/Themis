@@ -1,7 +1,10 @@
+"
+Provide items in world menu
+"
 Class {
 	#name : #THWorldMenu,
 	#superclass : #Object,
-	#category : #'Themis-Core-Tools'
+	#category : #'Themis-Core-Tools-Base'
 }
 
 { #category : #'world menu' }
