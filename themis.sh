@@ -34,24 +34,74 @@
 #############################################################
 
 # Find script context where we run 
+SCRIPT_NAME=$0
 SCRIPT=$(realpath -s "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
 
 #************************************************************
 # Utilities
 #************************************************************
-usage() { echo "Usage: $0 [-p <string>] " 1>&2; exit 1; }
+usage() { 
+    echo "Usage: $SCRIPT_NAME [OPTIONS]\n" 1>&2;
+    echo "Themis object server\n";
+    echo "Options:\n"
+    echo "\t-s\tsetup       - Setup the machine";
+    echo "\t-b\tbootstrap   - Bootstrap with fresh data";
+    echo "\t-c\tconnect     - Connect to the database";
+    echo "\t-d\tdevelop     - load all necessary file for development";
+    echo "\t-o\toperate     - operate the application";
+    echo ""
+    exit 1; 
+}
+
+
+setupMachine() {
+    sudo -v
+    sudo "$SCRIPTPATH/scripts/setup_machine.sh"
+}
+
+boostrapData() {
+    echo "Bootstrap data";
+    "$SCRIPTPATH/scripts/bootstrap_db.sh" $SCRIPTPATH 
+}
+
+connectToDatabase() {
+    echo "connect";
+}
+
+downloadApplication() {
+    "$SCRIPTPATH/scripts/download_pharo.sh" $SCRIPTPATH  
+}
+
+runApplication() {
+    "$SCRIPTPATH/scripts/run_pharo.sh" $SCRIPTPATH  
+}
 
 #************************************************************
 # Processing arguments
 #************************************************************
-while getopts ":p:h" o; do
+while getopts ":p:sbcdorh" o; do
     case "${o}" in
+        s) 
+            setupMachine
+            ;;
+        b)
+            boostrapData
+            ;;    
+        c)
+            connectToDatabase
+            ;;        
+        d)  downloadApplication
+            ;;
+        r)  runApplication
+            ;;    
         p)
             p=${OPTARG}
             ;;
         h)
             usage
+            ;;
+        *)  usage
             ;;
     esac
 done
@@ -64,11 +114,10 @@ shift $((OPTIND-1))
 #************************************************************
 # Check for required parameters
 #************************************************************
-if [ -z "${p}" ]; then
-    echo "Parameter p was not specified\n";
+if [ "${p}" ]; then    
     usage;
     exit;
 fi
 
 # Download Pharo into a /build directory
-"$SCRIPTPATH/scripts/download_pharo.sh" $SCRIPTPATH  
+
