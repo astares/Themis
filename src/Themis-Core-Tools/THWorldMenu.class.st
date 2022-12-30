@@ -20,6 +20,17 @@ THWorldMenu class >> idMenuCommandOn: aBuilder [
 				Clipboard clipboardText inspect ]
 ]
 
+{ #category : #'world menu' }
+THWorldMenu class >> inspectMenuCommandOn: aBuilder [
+	<worldMenu>
+	| parent |
+	parent := self mainMenuSymbol.
+	
+	(aBuilder item: #'Inspect teapot')
+		parent: parent;
+		action: [ TLWebserver teapot inspect ]
+]
+
 { #category : #'accessing - defaults' }
 THWorldMenu class >> mainMenuSymbol [
 
