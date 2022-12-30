@@ -4,7 +4,7 @@ Please describe the package using the class comment of the included manifest cla
 Class {
 	#name : #ManifestThemisCoreTools,
 	#superclass : #PackageManifest,
-	#category : #'Themis-Core-Tools-Manifest'
+	#category : #'Themis-Core-Tools'
 }
 
 { #category : #'code-critics' }

@@ -4,7 +4,7 @@ Provide items in world menu
 Class {
 	#name : #THWorldMenu,
 	#superclass : #Object,
-	#category : #'Themis-Core-Tools-Base'
+	#category : #'Themis-Core-Tools'
 }
 
 { #category : #'world menu' }
@@ -35,6 +35,17 @@ THWorldMenu class >> menuCommandOn: aBuilder [
 	(aBuilder item: parent)
 		order: 3.0. 
 	 
+]
+
+{ #category : #'world menu' }
+THWorldMenu class >> restAPIMenuCommandOn: aBuilder [
+	<worldMenu>
+	| parent |
+	parent := self mainMenuSymbol.
+	
+	(aBuilder item: #'Regenerate REST API')
+		parent: parent;
+		action: [ THRestAPI regenerateAPI ]
 ]
 
 { #category : #'world menu' }
