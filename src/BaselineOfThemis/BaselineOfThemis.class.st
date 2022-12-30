@@ -13,7 +13,7 @@ BaselineOfThemis >> baseline: spec [
 	
 	spec for: #common do: [ 
 
-		"Dependcies"		
+		"Dependencies"		
 		self 
 			sqlite3: spec;
 			tealight: spec.
@@ -21,13 +21,17 @@ BaselineOfThemis >> baseline: spec [
 		"Packages"
 		spec
 			package: 'Themis-Core-Model' with: [ spec requires: #('SQLite3' 'Tealight')];
-			package: 'Themis-Core-Model-Tests' with: [ spec requires: #( 'Themis-Core-Model' ) ].
+			package: 'Themis-Core-Model-Tests' with: [ spec requires: #( 'Themis-Core-Model' ) ];
+			package: 'Themis-Core-Persistence' with: [ spec requires: #( 'Themis-Core-Model' ) ].
 
 		"Groups"
 		spec
 			group: 'Core' with: #( 'Themis-Core-Model' );
+			group: 'Persistence' with: #( 'Themis-Core-Persistence' );
 			group: 'Tests' with: #( 'Themis-Core-Model-Tests' );
-			group: 'default' with: #( 'Core' 'Tests' ) ]
+		"Virtual groups"	
+			group: 'all' with: #( 'Core' 'Persistence' 'Tests' );
+			group: 'default' with: #( 'all' ) ]
 ]
 
 { #category : #dependencies }
