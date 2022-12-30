@@ -12,13 +12,18 @@ BaselineOfThemis >> baseline: spec [
 	<baseline>
 	
 	spec for: #common do: [ 
+
+		"Dependcies"		
+		self 
+			sqlite3: spec;
+			tealight: spec.
 		
-		self sqlite3: spec.
-		
+		"Packages"
 		spec
-			package: 'Themis-Core-Model' with: [ spec requires: 'SQLite3' ];
+			package: 'Themis-Core-Model' with: [ spec requires: #('SQLite3' 'Tealight')];
 			package: 'Themis-Core-Model-Tests' with: [ spec requires: #( 'Themis-Core-Model' ) ].
 
+		"Groups"
 		spec
 			group: 'Core' with: #( 'Themis-Core-Model' );
 			group: 'Tests' with: #( 'Themis-Core-Model-Tests' );
@@ -34,4 +39,15 @@ BaselineOfThemis >> sqlite3: spec [
 				spec
 					repository: 'github://pharo-rdbms/Pharo-SQLite3:v2.2.3/src';
 					loads: #('Core') ]
+]
+
+{ #category : #dependencies }
+BaselineOfThemis >> tealight: spec [
+
+	spec
+			baseline: 'Tealight'
+			with: [
+				spec
+					repository: 'github://astares/Tealight:main/src';
+					loads: #('Tools') ]
 ]
