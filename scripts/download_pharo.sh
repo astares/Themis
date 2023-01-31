@@ -32,7 +32,7 @@ mkdir "$BUILD_PATH"
 cd "$BUILD_PATH"
 
 # Download Pharo using ZeroConf (http://get.pharo.org)
-wget -O- https://get.pharo.org/64/100+vm | bash
+wget -O- https://get.pharo.org/64/110+vm | bash
 
 # Start Pharo with the load script
 ./pharo-ui ./Pharo.image ../scripts/load.st
