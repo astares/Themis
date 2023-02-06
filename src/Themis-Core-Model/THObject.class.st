@@ -11,6 +11,15 @@ Class {
 	#category : #'Themis-Core-Model-Base'
 }
 
+{ #category : #'instance creation' }
+THObject class >> oid: objectID clsid: classID [
+
+	^ self new
+		  oid: objectID;
+		  classID: classID;
+		  yourself
+]
+
 { #category : #accessing }
 THObject >> classID [
 
