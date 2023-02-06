@@ -71,7 +71,29 @@ THImageBuilder >> addSymbolicObject: aString [
 ]
 
 { #category : #accessing }
+THImageBuilder >> addSymbolicObject: instanceName asInstanceOf: className [ 
+		
+	| obj cls |
+	obj := self symbolicObjectFor: instanceName.
+	cls := self symbolicObjectFor: className.
+	self halt.
+]
+
+{ #category : #accessing }
+THImageBuilder >> idFor: aString [ 
+
+	^ KnownObjects at: aString ifAbsent: [ THObjectIDGenerator newObjectID ]
+]
+
+{ #category : #accessing }
 THImageBuilder >> image [
 
 	^ image ifNil: [ image := THSymbolicImage new ]
+]
+
+{ #category : #'as yet unclassified' }
+THImageBuilder >> symbolicObjectFor: aString [ 
+	|oid object |
+	oid := self idFor: aString.
+	object := self image symbolReferenceFor: aString ifAbsent: [].	
 ]

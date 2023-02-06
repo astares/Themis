@@ -20,7 +20,6 @@ THImageBuilderTest >> setUp [
 { #category : #tests }
 THImageBuilderTest >> testCreateKnownObject [
 
- 
 	builder addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject'.
 	self assert: (builder image symbolReferenceFor: 'nil') id equals: ''
 ]
