@@ -5,13 +5,9 @@ Class {
 	#name : #THImage,
 	#superclass : #Object,
 	#instVars : [
-		'symbolTable',
 		'objectMap'
 	],
-	#classVars : [
-		'KnownObjects'
-	],
-	#category : #'Themis-Bootstrap'
+	#category : #'Themis-Bootstrap-Base'
 }
 
 { #category : #accessing }
@@ -25,6 +21,12 @@ THImage >> initialize [
 
 	super initialize.
 	objectMap := Dictionary new
+]
+
+{ #category : #accessing }
+THImage >> objectMap [
+
+	^ objectMap
 ]
 
 { #category : #accessing }

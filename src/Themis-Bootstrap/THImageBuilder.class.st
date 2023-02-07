@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'KnownObjects'
 	],
-	#category : #'Themis-Bootstrap'
+	#category : #'Themis-Bootstrap-Base'
 }
 
 { #category : #building }
@@ -58,6 +58,13 @@ THImageBuilder class >> initializeKnownObjects [
 		'ClassDescription class' -> '90ba85ca70ad0d00a0f423990fbdbb13'.
 
 	 } asDictionary
+]
+
+{ #category : #accessing }
+THImageBuilder >> addClass: aClassName [
+
+	self addSymbolicObject: aClassName asInstanceOf: aClassName, ' class'.
+	self addSymbolicObject: aClassName, ' class' asInstanceOf: 'Metaclass'
 ]
 
 { #category : #accessing }

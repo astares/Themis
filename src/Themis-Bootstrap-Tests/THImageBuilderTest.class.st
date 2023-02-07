@@ -20,11 +20,15 @@ THImageBuilderTest >> setUp [
 { #category : #tests }
 THImageBuilderTest >> testCreateKnownObject [
 
+	| nilObject |
 	builder addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject'.
 
+	nilObject := builder symbolicObjectFor: 'nil'.
+
 	self
-		assert: (builder symbolicObjectFor: 'nil') oid equals: 'c349c34970ad0d00a0df7c0b0fbdbb13';
-		assert: (builder symbolicObjectFor: 'UndefinedObject') oid equals: '54e8a45c70ad0d00a0e0cf4a0fbdbb13'
+		assert: nilObject oid equals: 'c349c34970ad0d00a0df7c0b0fbdbb13';
+		assert: (builder symbolicObjectFor: 'UndefinedObject') oid equals: '54e8a45c70ad0d00a0e0cf4a0fbdbb13';
+		assert: nilObject classID equals: '54e8a45c70ad0d00a0e0cf4a0fbdbb13'
 ]
 
 { #category : #tests }
