@@ -19,7 +19,20 @@ THImageBuilder class >> build [
 
 	|builder|
 	builder := self new.
-	builder addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject'
+	builder
+		addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject';
+		addSymbolicObject: 'true' asInstanceOf: 'True';
+		addSymbolicObject: 'false' asInstanceOf: 'False';
+
+		addSymbolicObject: 'Metaclass' asInstanceOf: 'Metaclass class';
+
+		addClass: 'UndefinedObject';
+		addClass: 'Metaclass';
+		addClass: 'Boolean';
+		addClass: 'True';
+		addClass: 'False'.
+
+	builder inspect
 ]
 
 { #category : #'class initialization' }
@@ -34,6 +47,7 @@ THImageBuilder class >> initializeKnownObjects [
 	KnownObjects := {
 		'nil' -> 'c349c34970ad0d00a0df7c0b0fbdbb13'.
 		'UndefinedObject' -> '54e8a45c70ad0d00a0e0cf4a0fbdbb13'.
+	   'UndefinedObject' -> '5f179b7473b00d008e05bbc8091aea72'.
 
 		'true' -> '9605c19970ad0d00a0e8cb220fbdbb13'.
 		'True' -> '3f459e9d70ad0d00a0ebe6710fbdbb13'.
@@ -46,8 +60,8 @@ THImageBuilder class >> initializeKnownObjects [
 		'Object class' -> 'd07edf6d70ad0d00a0e3449f0fbdbb13'.
 
 		'Metaclass' -> 'b4cacf7870ad0d00a0e509060fbdbb13'.
-		'Metaclass class' -> '1a7fc9eb5eb00d00ab9abc5c0644a934'.		
-		
+		'Metaclass class' -> '1a7fc9eb5eb00d00ab9abc5c0644a934'.
+
 		'Boolean' -> '9f782a9470ad0d00a0e67d680fbdbb13'.
 		'Boolean class' -> 'cfdb0a9570ad0d00a0e75bd80fbdbb13'.
 

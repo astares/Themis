@@ -32,6 +32,26 @@ THImageBuilderTest >> testCreateKnownObject [
 ]
 
 { #category : #tests }
+THImageBuilderTest >> testCreateMetacycle [
+
+	| metaClass undefClass |
+	builder
+		addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject';
+		addSymbolicObject: 'Metaclass' asInstanceOf: 'Metaclass class';
+
+		addClass: 'UndefinedObject';
+		addClass: 'Metaclass'.
+
+	self
+		assert: builder image objectMap size equals: 5.
+
+	metaClass := builder symbolicObjectFor: 'Metaclass'.
+	undefClass := builder symbolicObjectFor: 'UndefinedObject class'.
+
+	self assert: undefClass classID equals: metaClass oid
+]
+
+{ #category : #tests }
 THImageBuilderTest >> testImage [
 
 	self assert: builder image notNil
