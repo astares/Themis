@@ -21,11 +21,20 @@ THImageBuilderTest >> setUp [
 THImageBuilderTest >> testCreateKnownObject [
 
 	builder addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject'.
-	self assert: (builder image symbolReferenceFor: 'nil') id equals: ''
+
+	self
+		assert: (builder symbolicObjectFor: 'nil') oid equals: 'c349c34970ad0d00a0df7c0b0fbdbb13';
+		assert: (builder symbolicObjectFor: 'UndefinedObject') oid equals: '54e8a45c70ad0d00a0e0cf4a0fbdbb13'
 ]
 
 { #category : #tests }
 THImageBuilderTest >> testImage [
 
-	self assert: THImageBuilder new image notNil
+	self assert: builder image notNil
+]
+
+{ #category : #tests }
+THImageBuilderTest >> testSymbolTable [
+
+	self assert: builder symbolTable isEmpty
 ]

@@ -5,13 +5,22 @@ Class {
 	#name : #THImageBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'image'
+		'image',
+		'symbolTable'
 	],
 	#classVars : [
 		'KnownObjects'
 	],
 	#category : #'Themis-Bootstrap'
 }
+
+{ #category : #building }
+THImageBuilder class >> build [
+
+	|builder|
+	builder := self new.
+	builder addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject'
+]
 
 { #category : #'class initialization' }
 THImageBuilder class >> initialize [
@@ -51,49 +60,53 @@ THImageBuilder class >> initializeKnownObjects [
 	 } asDictionary
 ]
 
-{ #category : #adding }
-THImageBuilder >> addNewSymbolicObject: aString asInstanceOf: classObject [
-
-	| oid clsid |
-	oid := KnownObjects at: aString ifAbsent: [ THObjectIDGenerator newObjectID ].
-	clsid := KnownObjects at: aString ifAbsent: [ THObjectIDGenerator newObjectID ].
-	image symbolTableAt: aString put: oid.
-	image symbolTableAt: classObject put: clsid.
-	
-]
-
-{ #category : #adding }
-THImageBuilder >> addSymbolicObject: aString [ 
-
-	| oid |
-	oid := KnownObjects at: aString ifAbsent: [ THObjectIDGenerator newObjectID ].
-	oid addSymbolicObject: 11
-]
-
 { #category : #accessing }
 THImageBuilder >> addSymbolicObject: instanceName asInstanceOf: className [ 
 		
 	| obj cls |
 	obj := self symbolicObjectFor: instanceName.
 	cls := self symbolicObjectFor: className.
-	self halt.
-]
-
-{ #category : #accessing }
-THImageBuilder >> idFor: aString [ 
-
-	^ KnownObjects at: aString ifAbsent: [ THObjectIDGenerator newObjectID ]
+	obj classID: cls oid 
 ]
 
 { #category : #accessing }
 THImageBuilder >> image [
 
-	^ image ifNil: [ image := THSymbolicImage new ]
+	^ image ifNil: [ image := THImage new ]
 ]
 
-{ #category : #'as yet unclassified' }
-THImageBuilder >> symbolicObjectFor: aString [ 
-	|oid object |
-	oid := self idFor: aString.
-	object := self image symbolReferenceFor: aString ifAbsent: [].	
+{ #category : #initialization }
+THImageBuilder >> initialize [
+
+	super initialize.
+	symbolTable := Dictionary new
+]
+
+{ #category : #'private - accessing' }
+THImageBuilder >> knownOrNewOID: aString [
+
+	^ KnownObjects at: aString ifAbsent: [ THObjectIDGenerator newObjectID ]
+]
+
+{ #category : #registration }
+THImageBuilder >> registerObjectWithID: oid [
+
+	| object |
+	object := THObject new oid: oid.
+	self image registerObject: object.
+	^ object
+]
+
+{ #category : #accessing }
+THImageBuilder >> symbolTable [
+
+	^ symbolTable
+]
+
+{ #category : #accessing }
+THImageBuilder >> symbolicObjectFor: aString [
+
+	| oid |
+	oid := self knownOrNewOID: aString.
+	^ symbolTable at: aString ifAbsentPut: [ self registerObjectWithID: oid ]
 ]
