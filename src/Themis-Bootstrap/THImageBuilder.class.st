@@ -22,6 +22,7 @@ THImageBuilder class >> build [
 	builder
 		addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject';
 		addSymbolicObject: 'true' asInstanceOf: 'True';
+	 
 		addSymbolicObject: 'false' asInstanceOf: 'False';
 
 		addSymbolicObject: 'Metaclass' asInstanceOf: 'Metaclass class';
@@ -50,38 +51,38 @@ THImageBuilder class >> initialize [
 THImageBuilder class >> initializeKnownObjects [
 	<script: 'self initializeKnownObjects. KnownObjects inspect'>
 	KnownObjects := {
-		'nil' -> 'c349c34970ad0d00a0df7c0b0fbdbb13'.
-		'UndefinedObject' -> '54e8a45c70ad0d00a0e0cf4a0fbdbb13'.
-	   'UndefinedObject class' -> '5f179b7473b00d008e05bbc8091aea72'.
+		#nil -> 'c349c34970ad0d00a0df7c0b0fbdbb13'.
+		#UndefinedObject -> '54e8a45c70ad0d00a0e0cf4a0fbdbb13'.
+	   #'UndefinedObject class' -> '5f179b7473b00d008e05bbc8091aea72'.
 
-		'true' -> '9605c19970ad0d00a0e8cb220fbdbb13'.
-		'True' -> '3f459e9d70ad0d00a0ebe6710fbdbb13'.
-		'True class' -> '48f8179efdb00d00b8a7edb6087deccc'.
+		#true -> '9605c19970ad0d00a0e8cb220fbdbb13'.
+		#True -> '3f459e9d70ad0d00a0ebe6710fbdbb13'.
+		#'True class' -> '48f8179efdb00d00b8a7edb6087deccc'.
 
-		'false	' -> '504d0d9c70ad0d00a0e94f5d0fbdbb13'.
-		'False	' -> 'a7adaca070ad0d00a0ed4b840fbdbb13'.
-		'False	 class' -> '022ab0a270ad0d00a0ee02920fbdbb13'.
+		#false -> '504d0d9c70ad0d00a0e94f5d0fbdbb13'.
+		#False -> 'a7adaca070ad0d00a0ed4b840fbdbb13'.
+		#'False class' -> '022ab0a270ad0d00a0ee02920fbdbb13'.
 
-		'Object' -> 'dbc5266d70ad0d00a0e26a4e0fbdbb13'.
-		'Object class' -> 'd07edf6d70ad0d00a0e3449f0fbdbb13'.
+		#Object -> 'dbc5266d70ad0d00a0e26a4e0fbdbb13'.
+		#'Object class' -> 'd07edf6d70ad0d00a0e3449f0fbdbb13'.
 
-		'Behavior' -> '46169529fdb00d00b8356d1f087deccc'.
-		'Behavior class' -> '445f8b2afdb00d00b8363afa087deccc'.
+		#Behavior -> '46169529fdb00d00b8356d1f087deccc'.
+		#'Behavior class' -> '445f8b2afdb00d00b8363afa087deccc'.
 
-		'ClassDescription' -> 'a77d4b31fdb00d00b837f763087deccc'.
-		'ClassDescription class' -> 'a16ccc31fdb00d00b8389a7c087deccc'.
+		#ClassDescription -> 'a77d4b31fdb00d00b837f763087deccc'.
+		#'ClassDescription class' -> 'a16ccc31fdb00d00b8389a7c087deccc'.
 
-		'Metaclass' -> 'b4cacf7870ad0d00a0e509060fbdbb13'.
-		'Metaclass class' -> '1a7fc9eb5eb00d00ab9abc5c0644a934'.
+		#Metaclass -> 'b4cacf7870ad0d00a0e509060fbdbb13'.
+		#'Metaclass class' -> '1a7fc9eb5eb00d00ab9abc5c0644a934'.
 
-		'Boolean' -> '9f782a9470ad0d00a0e67d680fbdbb13'.
-		'Boolean class' -> 'cfdb0a9570ad0d00a0e75bd80fbdbb13'.
+		#Boolean -> '9f782a9470ad0d00a0e67d680fbdbb13'.
+		#'Boolean class' -> 'cfdb0a9570ad0d00a0e75bd80fbdbb13'.
 
-		'Behavior' -> '16b2a7c570ad0d00a0f187db0fbdbb13'.
-		'Behavior class' -> 'bffc36c670ad0d00a0f254930fbdbb13'.
+		#Behavior -> '16b2a7c570ad0d00a0f187db0fbdbb13'.
+		#'Behavior class' -> 'bffc36c670ad0d00a0f254930fbdbb13'.
 
-		'ClassDescription' -> 'c4f00dca70ad0d00a0f3bcf70fbdbb13'.
-		'ClassDescription class' -> '90ba85ca70ad0d00a0f423990fbdbb13'.
+		#ClassDescription -> 'c4f00dca70ad0d00a0f3bcf70fbdbb13'.
+		#'ClassDescription class' -> '90ba85ca70ad0d00a0f423990fbdbb13'.
 
 	 } asOrderedDictionary
 ]
@@ -119,6 +120,35 @@ THImageBuilder >> initialize [
 
 	super initialize.
 	symbolTable := Dictionary new
+]
+
+{ #category : #accessing }
+THImageBuilder >> inspectionItems: aBuilder [
+	<inspectorPresentationOrder: 0 title: 'Instance of'>
+
+	^ aBuilder newTable
+		addColumn: (SpIndexTableColumn new
+			title: 'Index';
+			beNotExpandable;
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Instance';
+			evaluated: [:each | KnownObjects keyAtValue: each key ifAbsent: '' ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Instance ID';
+			evaluated: [ :each | each key asString ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Class';
+			evaluated: [:each | KnownObjects keyAtValue: each value classID ifAbsent: '' ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Class ID';
+			evaluated: [ :each | each value classID asString ];
+			yourself);
+		items: self image objectMap associations;
+		yourself
 ]
 
 { #category : #'private - accessing' }
