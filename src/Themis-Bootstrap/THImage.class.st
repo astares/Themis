@@ -20,7 +20,7 @@ THImage >> hasObjectWithId: anOID [
 THImage >> initialize [
 
 	super initialize.
-	objectMap := Dictionary new
+	objectMap := OrderedDictionary new
 ]
 
 { #category : #accessing }

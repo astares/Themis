@@ -48,7 +48,7 @@ THImageBuilder class >> initialize [
 
 { #category : #'private - initialization' }
 THImageBuilder class >> initializeKnownObjects [
-	<script: 'KnownObjects inspect'>
+	<script: 'self initializeKnownObjects. KnownObjects inspect'>
 	KnownObjects := {
 		'nil' -> 'c349c34970ad0d00a0df7c0b0fbdbb13'.
 		'UndefinedObject' -> '54e8a45c70ad0d00a0e0cf4a0fbdbb13'.
@@ -83,7 +83,7 @@ THImageBuilder class >> initializeKnownObjects [
 		'ClassDescription' -> 'c4f00dca70ad0d00a0f3bcf70fbdbb13'.
 		'ClassDescription class' -> '90ba85ca70ad0d00a0f423990fbdbb13'.
 
-	 } asDictionary
+	 } asOrderedDictionary
 ]
 
 { #category : #accessing }
