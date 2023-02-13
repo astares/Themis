@@ -58,6 +58,14 @@ THImageBuilderTest >> testImage [
 ]
 
 { #category : #tests }
+THImageBuilderTest >> testKnownObjectsHaveUniqueKeys [
+
+	|map|
+	map := THImageBuilder knownObjects.
+	self assert: map size equals: map values asSet size
+]
+
+{ #category : #tests }
 THImageBuilderTest >> testSymbolTable [
 
 	self assert: builder symbolTable isEmpty

@@ -16,7 +16,7 @@ Class {
 
 { #category : #building }
 THImageBuilder class >> build [
-
+	<script>
 	|builder|
 	builder := self new.
 	builder
@@ -25,8 +25,13 @@ THImageBuilder class >> build [
 		addSymbolicObject: 'false' asInstanceOf: 'False';
 
 		addSymbolicObject: 'Metaclass' asInstanceOf: 'Metaclass class';
+		addSymbolicObject: 'Metaclass class' asInstanceOf: 'Metaclass';
 
 		addClass: 'UndefinedObject';
+		addClass: 'Object';
+		addClass: 'Behavior';
+		addClass: 'ClassDescription';
+		addClass: 'Class';
 		addClass: 'Metaclass';
 		addClass: 'Boolean';
 		addClass: 'True';
@@ -47,10 +52,11 @@ THImageBuilder class >> initializeKnownObjects [
 	KnownObjects := {
 		'nil' -> 'c349c34970ad0d00a0df7c0b0fbdbb13'.
 		'UndefinedObject' -> '54e8a45c70ad0d00a0e0cf4a0fbdbb13'.
-	   'UndefinedObject' -> '5f179b7473b00d008e05bbc8091aea72'.
+	   'UndefinedObject class' -> '5f179b7473b00d008e05bbc8091aea72'.
 
 		'true' -> '9605c19970ad0d00a0e8cb220fbdbb13'.
 		'True' -> '3f459e9d70ad0d00a0ebe6710fbdbb13'.
+		'True class' -> '48f8179efdb00d00b8a7edb6087deccc'.
 
 		'false	' -> '504d0d9c70ad0d00a0e94f5d0fbdbb13'.
 		'False	' -> 'a7adaca070ad0d00a0ed4b840fbdbb13'.
@@ -58,6 +64,12 @@ THImageBuilder class >> initializeKnownObjects [
 
 		'Object' -> 'dbc5266d70ad0d00a0e26a4e0fbdbb13'.
 		'Object class' -> 'd07edf6d70ad0d00a0e3449f0fbdbb13'.
+
+		'Behavior' -> '46169529fdb00d00b8356d1f087deccc'.
+		'Behavior class' -> '445f8b2afdb00d00b8363afa087deccc'.
+
+		'ClassDescription' -> 'a77d4b31fdb00d00b837f763087deccc'.
+		'ClassDescription class' -> 'a16ccc31fdb00d00b8389a7c087deccc'.
 
 		'Metaclass' -> 'b4cacf7870ad0d00a0e509060fbdbb13'.
 		'Metaclass class' -> '1a7fc9eb5eb00d00ab9abc5c0644a934'.
@@ -72,6 +84,12 @@ THImageBuilder class >> initializeKnownObjects [
 		'ClassDescription class' -> '90ba85ca70ad0d00a0f423990fbdbb13'.
 
 	 } asDictionary
+]
+
+{ #category : #accessing }
+THImageBuilder class >> knownObjects [
+
+	^ KnownObjects
 ]
 
 { #category : #accessing }
