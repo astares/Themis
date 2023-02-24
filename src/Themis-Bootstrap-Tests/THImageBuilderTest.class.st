@@ -14,7 +14,7 @@ Class {
 THImageBuilderTest >> setUp [
 
 	super setUp.
-	builder := THImageBuilder new
+	builder := THImageBuilderOld new
 ]
 
 { #category : #tests }
@@ -61,7 +61,7 @@ THImageBuilderTest >> testImage [
 THImageBuilderTest >> testKnownObjectsHaveUniqueKeys [
 
 	|map|
-	map := THImageBuilder knownObjects.
+	map := THImageBuilderOld knownObjects.
 	self assert: map size equals: map values asSet size
 ]
 
