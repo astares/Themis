@@ -26,8 +26,8 @@ THAbstractImageDescription >> addNamedObject: object inRelation: relation to: cl
 	oid := self oidForNamedObject: object.
 
 	entries add: (Array with: oid with: object with: 'id' with: oid with: 'V' ).
-	entries add: (Array with: oid with: object with: 'name' with: object with: 'V').
-	entries add: (Array with: oid with: object with: relation with: class with: 'R')
+	entries add: (Array with: oid with: object with: relation with: class with: 'R').
+	entries add: (Array with: oid with: object with: 'name' with: object with: 'V')
 ]
 
 { #category : #'private - building' }
@@ -125,12 +125,11 @@ THAbstractImageDescription >> oidForNamedObject: object [
 		  ifAbsentPut: [ THObjectIDGenerator newObjectID ]
 ]
 
-{ #category : #accessing }
-THAbstractImageDescription >> setRelation: aString for: object to: aString3 [ 
-	
+{ #category : #'private - utilities' }
+THAbstractImageDescription >> setRelation: aString for: object to: aString3 [
+
 	| oid |
 	oid := self oidForNamedObject: object.
 
 	entries add: (Array with: oid with: object with: aString with: aString3 with: 'R' )
-	 
 ]
