@@ -92,7 +92,7 @@ THAbstractImageDescription >> inspectionReadableItems: aBuilder [
 	^ aBuilder newTable
 		addColumn: (SpStringTableColumn new
 			title: 'O';
-			evaluated: [:each | self oidForNamedObject: (each first asString) ];
+			evaluated: [:each | each first asString ];
 			yourself);
 		addColumn: (SpStringTableColumn new
 			title: 'R';
@@ -101,7 +101,7 @@ THAbstractImageDescription >> inspectionReadableItems: aBuilder [
 		addColumn: (SpStringTableColumn new
 			title: 'V';
 			evaluated: [:each |
-			 
+
 				(each fifth asString) = 'V'
 					ifTrue: [ each fourth asString ]
 					ifFalse: [  self oidForNamedObject: each fourth asString ]
