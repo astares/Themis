@@ -12,10 +12,10 @@ THWorldMenu class >> idMenuCommandOn: aBuilder [
 	<worldMenu>
 	| parent |
 	parent := self mainMenuSymbol.
-	
+
 	(aBuilder item: #'Generate OID')
 		parent: parent;
-		action: [ 
+		action: [
 				Clipboard clipboardText: THObjectIDGenerator newObjectID.
 				Clipboard clipboardText inspect ]
 ]
@@ -25,7 +25,7 @@ THWorldMenu class >> inspectMenuCommandOn: aBuilder [
 	<worldMenu>
 	| parent |
 	parent := self mainMenuSymbol.
-	
+
 	(aBuilder item: #'Inspect teapot')
 		parent: parent;
 		action: [ TLWebserver teapot inspect ]

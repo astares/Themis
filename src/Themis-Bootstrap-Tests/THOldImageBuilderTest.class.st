@@ -2,23 +2,23 @@
 A THImageBuilderTest is a test class for testing the behavior of THImageBuilder
 "
 Class {
-	#name : #THImageBuilderTest,
+	#name : #THOldImageBuilderTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'builder'
 	],
-	#category : #'Themis-Bootstrap-Tests'
+	#category : #'Themis-Bootstrap-Tests-Legacy'
 }
 
 { #category : #running }
-THImageBuilderTest >> setUp [
+THOldImageBuilderTest >> setUp [
 
 	super setUp.
 	builder := THImageBuilderOld new
 ]
 
 { #category : #tests }
-THImageBuilderTest >> testCreateKnownObject [
+THOldImageBuilderTest >> testCreateKnownObject [
 
 	| nilObject |
 	builder addSymbolicObject: 'nil' asInstanceOf: 'UndefinedObject'.
@@ -32,7 +32,7 @@ THImageBuilderTest >> testCreateKnownObject [
 ]
 
 { #category : #tests }
-THImageBuilderTest >> testCreateMetacycle [
+THOldImageBuilderTest >> testCreateMetacycle [
 
 	| metaClass undefClass |
 	builder
@@ -52,13 +52,13 @@ THImageBuilderTest >> testCreateMetacycle [
 ]
 
 { #category : #tests }
-THImageBuilderTest >> testImage [
+THOldImageBuilderTest >> testImage [
 
 	self assert: builder image notNil
 ]
 
 { #category : #tests }
-THImageBuilderTest >> testKnownObjectsHaveUniqueKeys [
+THOldImageBuilderTest >> testKnownObjectsHaveUniqueKeys [
 
 	|map|
 	map := THImageBuilderOld knownObjects.
@@ -66,7 +66,7 @@ THImageBuilderTest >> testKnownObjectsHaveUniqueKeys [
 ]
 
 { #category : #tests }
-THImageBuilderTest >> testSymbolTable [
+THOldImageBuilderTest >> testSymbolTable [
 
 	self assert: builder symbolTable isEmpty
 ]
