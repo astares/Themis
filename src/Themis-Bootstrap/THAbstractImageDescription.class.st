@@ -34,20 +34,21 @@ THAbstractImageDescription >> addNamedObject: object inRelation: relation to: cl
 THAbstractImageDescription >> buildClass: aClass asSubclassOf: superclass [
 
 	| metaSuperclass root |
+	(nameCache includesKey: aClass) ifTrue: [ ^self ].
 	self buildObject: aClass asInstanceOf: aClass, ' class'.
-	self addNamedObject: aClass inRelation: 'superclass' to: superclass.
+	self setRelation: 'superclass' for: aClass to: superclass.
 
 	metaSuperclass := superclass, ' class'.
 	root := protoAsRoot ifTrue: [ 'ProtoObject' ] ifFalse: [ 'Object' ].
 	aClass = root ifTrue: [ metaSuperclass := 'Class' ].
 
 	self buildObject: aClass, ' class' asInstanceOf: 'Metaclass'.
-	self addNamedObject: aClass, ' class' inRelation: 'superclass' to: metaSuperclass
+	self setRelation: 'superclass' for: aClass, ' class' to: metaSuperclass
 ]
 
 { #category : #'private - building' }
 THAbstractImageDescription >> buildObject: object asInstanceOf: class [
-
+ 
 	self addNamedObject: object inRelation: 'class' to: class
 ]
 
@@ -122,4 +123,14 @@ THAbstractImageDescription >> oidForNamedObject: object [
 	^ nameCache
 		  at: object
 		  ifAbsentPut: [ THObjectIDGenerator newObjectID ]
+]
+
+{ #category : #accessing }
+THAbstractImageDescription >> setRelation: aString for: object to: aString3 [ 
+	
+	| oid |
+	oid := self oidForNamedObject: object.
+
+	entries add: (Array with: oid with: object with: aString with: aString3 with: 'R' )
+	 
 ]
