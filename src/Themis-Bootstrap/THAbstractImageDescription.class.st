@@ -22,11 +22,12 @@ THAbstractImageDescription class >> isAbstract [
 { #category : #'private - utilities' }
 THAbstractImageDescription >> addNamedObject: object inRelation: relation to: class [
 
-	| id |
-	id := self oidForNamedObject: object.
+	| oid |
+	oid := self oidForNamedObject: object.
 
-	entries add: (Array with: object with: 'id' with: id).
-	entries add: (Array with: object with: relation with: class)
+	entries add: (Array with: oid with: object with: 'id' with: oid with: 'V' ).
+	entries add: (Array with: oid with: object with: 'name' with: object with: 'V').
+	entries add: (Array with: oid with: object with: relation with: class with: 'R')
 ]
 
 { #category : #'private - building' }
@@ -61,22 +62,57 @@ THAbstractImageDescription >> initialize [
 
 { #category : #'private - building' }
 THAbstractImageDescription >> inspectionItems: aBuilder [
-	<inspectorPresentationOrder: 0 title: 'Instance of'>
+	<inspectorPresentationOrder: 0 title: 'ENTRIES'>
 
 	^ aBuilder newTable
 		addColumn: (SpStringTableColumn new
 			title: 'Object';
-			evaluated: [:each | each first asString ];
+			evaluated: [:each | each second asString ];
 			yourself);
 		addColumn: (SpStringTableColumn new
 			title: 'Relation';
-			evaluated: [ :each | each second asString ];
+			evaluated: [ :each | each third asString ];
 			yourself);
 		addColumn: (SpStringTableColumn new
-			title: 'Related';
-			evaluated: [:each | each third asString ];
+			title: 'Value';
+			evaluated: [:each | each fourth asString ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Type';
+			evaluated: [:each | each fifth asString ];
 			yourself);
 		items: entries;
+		yourself
+]
+
+{ #category : #'private - building' }
+THAbstractImageDescription >> inspectionReadableItems: aBuilder [
+	<inspectorPresentationOrder: 1 title: 'ENTRIES (R)'>
+
+	^ aBuilder newTable
+		addColumn: (SpStringTableColumn new
+			title: 'O';
+			evaluated: [:each | self oidForNamedObject: (each first asString) ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'R';
+			evaluated: [ :each | self oidForNamedObject: (each third asString) ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'V';
+			evaluated: [:each |
+			 
+				(each fifth asString) = 'V'
+					ifTrue: [ each fourth asString ]
+					ifFalse: [  self oidForNamedObject: each fourth asString ]
+				 ];
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'T';
+			evaluated: [:each | each fifth asString ];
+			yourself);
+		items: entries;
+
 		yourself
 ]
 
